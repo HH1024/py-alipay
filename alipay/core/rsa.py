@@ -1,4 +1,7 @@
+# -*- coding:utf-8 -*-
 
+import rsa
+import base64
 
 class Sign(object):
     def __init__(self, s=None):

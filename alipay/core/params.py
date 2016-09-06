@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 
+import json, decimal, datetime
+
 class Params(object):
     def __init__(self, **kwargs):
         self._p_ = kwargs
@@ -23,4 +25,15 @@ class Params(object):
         # return urllib.quote(s.encode('utf-8'))
         return s.encode('utf-8')
 
-    
+
+class CJsonEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime.datetime):
+            return obj.strftime('%Y-%m-%d %H:%M:%S')
+        elif isinstance(obj, datetime.date):
+            return obj.strftime('%Y-%m-%d')
+        elif isinstance(obj, decimal.Decimal):
+            return '%.2f' % (obj)
+        else:
+            return json.JSONEncoder.default(self, obj)
+
